@@ -1,0 +1,173 @@
+<mxfile host="app.diagrams.net" modified="2026-02-27" agent="ShieldAgent" version="24.0.0" type="device">
+  <diagram id="level3" name="Level 3 - Data Flow (Scan Pipeline)">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="ShieldAgent - Scan Pipeline Data Flow" style="text;html=1;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;whiteSpace=wrap;fillColor=none;strokeColor=none;fontColor=#1a1a2e;" vertex="1" parent="1">
+          <mxGeometry x="250" y="10" width="700" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Step 1: Input -->
+        <mxCell id="step1bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="200" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="step1num" value="&lt;font color=&quot;#1565c0&quot;&gt;&lt;b&gt;1. INPUT&lt;/b&gt;&lt;/font&gt;" style="text;html=1;fontSize=13;align=center;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="70" y="85" width="140" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="inputLocal" value="Local directory&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;./my-mcp-server&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbdefb;strokeColor=#1565c0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="55" y="115" width="170" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="inputConfig" value="MCP Config file&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;claude_desktop_config.json&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbdefb;strokeColor=#1565c0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="55" y="160" width="170" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="inputNpm" value="npm package&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;@mcp/server-filesystem&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbdefb;strokeColor=#1565c0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="55" y="205" width="170" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Step 2: Load -->
+        <mxCell id="step2bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="290" y="80" width="200" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="step2num" value="&lt;font color=&quot;#2e7d32&quot;&gt;&lt;b&gt;2. LOAD &amp; PARSE&lt;/b&gt;&lt;/font&gt;" style="text;html=1;fontSize=13;align=center;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="310" y="85" width="160" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="loadTools" value="Extract MCP tool&lt;br&gt;definitions (AST)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#2e7d32;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="305" y="115" width="170" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="loadSource" value="Read source files" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#2e7d32;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="305" y="160" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="loadPkg" value="Parse package.json&lt;br&gt;&amp; dependencies" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#2e7d32;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="305" y="200" width="170" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- ScanTarget object -->
+        <mxCell id="scanTarget" value="&lt;b&gt;ScanTarget&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;{ tools[], sourceFiles[],&lt;br&gt;packageJson, path }&lt;/font&gt;" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=0.1;fillColor=#fff9c4;strokeColor=#f9a825;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="320" y="290" width="150" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow step 1 to 2 -->
+        <mxCell id="a12" edge="1" source="step1bg" target="step2bg" parent="1" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;strokeColor=#666;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow step 2 to ScanTarget -->
+        <mxCell id="a2t" edge="1" source="step2bg" target="scanTarget" parent="1" style="strokeWidth=2;strokeColor=#f9a825;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Step 3: Scan -->
+        <mxCell id="step3bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce4ec;strokeColor=#c62828;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="540" y="80" width="260" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="step3num" value="&lt;font color=&quot;#c62828&quot;&gt;&lt;b&gt;3. SCAN (parallel)&lt;/b&gt;&lt;/font&gt;" style="text;html=1;fontSize=13;align=center;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="580" y="85" width="180" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="scan1" value="Tool Poisoning" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="555" y="115" width="110" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="scan2" value="Prompt Injection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="675" y="115" width="110" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="scan3" value="Command Injection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="555" y="150" width="110" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="scan4" value="Over-Permission" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="675" y="150" width="110" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="scan5" value="Data Exfiltration" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="555" y="185" width="110" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="scan6" value="Supply Chain" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="675" y="185" width="110" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="scan7" value="Auth &amp; Transport" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="555" y="220" width="110" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="scan8" value="Input Validation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="675" y="220" width="110" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="allSettled" value="&lt;b&gt;Promise.allSettled()&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Graceful degradation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c62828;fontColor=#ffffff;strokeColor=#c62828;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="580" y="265" width="190" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow ScanTarget to Step 3 -->
+        <mxCell id="at3" edge="1" source="scanTarget" target="step3bg" parent="1" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;strokeColor=#f9a825;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="at3label" value="ScanTarget" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#f9a825;fontStyle=1;" connectable="0" vertex="1" parent="at3">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- Step 4: Filter -->
+        <mxCell id="step4bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#ef6c00;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="540" y="400" width="260" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="step4num" value="&lt;font color=&quot;#ef6c00&quot;&gt;&lt;b&gt;4. FILTER &amp; DEDUPLICATE&lt;/b&gt;&lt;/font&gt;" style="text;html=1;fontSize=13;align=center;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="555" y="405" width="230" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="filter1" value="Severity filter (--min-severity)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#ef6c00;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="555" y="435" width="230" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="filter2" value="Rule include/exclude" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#ef6c00;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="555" y="465" width="230" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="filter3" value="Fingerprint deduplication" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#ef6c00;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="555" y="495" width="230" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow 3 to 4 -->
+        <mxCell id="a34" edge="1" source="allSettled" target="step4bg" parent="1" style="strokeWidth=2;strokeColor=#666;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a34label" value="Finding[]" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#c62828;fontStyle=1;" connectable="0" vertex="1" parent="a34">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- Step 5: Report -->
+        <mxCell id="step5bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#512da8;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="860" y="400" width="280" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="step5num" value="&lt;font color=&quot;#512da8&quot;&gt;&lt;b&gt;5. REPORT&lt;/b&gt;&lt;/font&gt;" style="text;html=1;fontSize=13;align=center;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="940" y="405" width="120" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="repT" value="&lt;b&gt;Table&lt;/b&gt; (default)&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Colored terminal output&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="875" y="440" width="120" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="repJ" value="&lt;b&gt;JSON&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;Machine readable&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1005" y="440" width="120" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="repS" value="&lt;b&gt;SARIF 2.1.0&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;GitHub Security tab&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="875" y="500" width="120" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="repComp" value="&lt;b&gt;Compliance&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;OWASP / Adversa map&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1005" y="500" width="120" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Exit code -->
+        <mxCell id="exitCode" value="&lt;b&gt;Exit Code&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;0 = clean | 1 = findings | 2 = error&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#512da8;fontColor=#ffffff;strokeColor=#512da8;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="890" y="565" width="230" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow 4 to 5 -->
+        <mxCell id="a45" edge="1" source="step4bg" target="step5bg" parent="1" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;strokeColor=#666;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a45label" value="ScanResult" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#ef6c00;fontStyle=1;" connectable="0" vertex="1" parent="a45">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- Performance note -->
+        <mxCell id="perfNote" value="&lt;font style=&quot;font-size:10px;color:#888;&quot;&gt;ts-morph loaded lazily only when AST scanners run | Pattern scanners are near-instant | Full scan &lt; 5s for typical MCP server&lt;/font&gt;" style="text;html=1;align=center;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="200" y="680" width="800" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
