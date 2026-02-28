@@ -10,6 +10,8 @@ import type {
 
 const TS_EXTENSIONS = new Set(['.ts', '.js', '.mjs', '.mts']);
 
+const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage', '.next']);
+
 const TOOL_DEFINITION_PATTERNS = [
   /server\.tool\(\s*["'`]([^"'`]+)["'`]\s*,\s*["'`]([^"'`]+)["'`]\s*,\s*(\{[\s\S]*?\})\s*,/g,
   /name:\s*["'`]([^"'`]+)["'`][\s\S]*?description:\s*["'`]([^"'`]+)["'`]/g,
@@ -37,17 +39,19 @@ export const loadMCPServer = async (
   };
 };
 
-const matchesExclude = (filePath: string, basePath: string, patterns: string[]): boolean => {
-  const rel = relative(basePath, filePath).replace(/\\/g, '/');
-  return patterns.some((pattern) => {
-    // Convert glob to regex: ** = any path, * = any segment
+const compileExcludePatterns = (patterns: string[]): RegExp[] =>
+  patterns.map((pattern) => {
     const regexStr = pattern
       .replace(/\./g, '\\.')
       .replace(/\*\*/g, '{{GLOBSTAR}}')
       .replace(/\*/g, '[^/]*')
       .replace(/\{\{GLOBSTAR\}\}/g, '.*');
-    return new RegExp(`^${regexStr}$`).test(rel);
+    return new RegExp(`^${regexStr}$`);
   });
+
+const matchesExclude = (filePath: string, basePath: string, compiledPatterns: RegExp[]): boolean => {
+  const rel = relative(basePath, filePath).replace(/\\/g, '/');
+  return compiledPatterns.some((regex) => regex.test(rel));
 };
 
 const collectSourceFiles = async (
@@ -55,7 +59,8 @@ const collectSourceFiles = async (
   excludePatterns: string[],
 ): Promise<SourceFile[]> => {
   const files: SourceFile[] = [];
-  await walkDirectory(dirPath, files, dirPath, excludePatterns);
+  const compiledPatterns = compileExcludePatterns(excludePatterns);
+  await walkDirectory(dirPath, files, dirPath, compiledPatterns);
   return files;
 };
 
@@ -63,10 +68,8 @@ const walkDirectory = async (
   dirPath: string,
   files: SourceFile[],
   basePath: string,
-  excludePatterns: string[],
+  compiledPatterns: RegExp[],
 ): Promise<void> => {
-  const skipDirs = new Set(['node_modules', 'dist', '.git', 'coverage', '.next']);
-
   let entries;
   try {
     entries = await readdir(dirPath, { withFileTypes: true });
@@ -78,11 +81,11 @@ const walkDirectory = async (
     const fullPath = join(dirPath, entry.name);
 
     if (entry.isDirectory()) {
-      if (!skipDirs.has(entry.name)) {
-        await walkDirectory(fullPath, files, basePath, excludePatterns);
+      if (!SKIP_DIRS.has(entry.name)) {
+        await walkDirectory(fullPath, files, basePath, compiledPatterns);
       }
     } else if (entry.isFile() && TS_EXTENSIONS.has(extname(entry.name))) {
-      if (matchesExclude(fullPath, basePath, excludePatterns)) continue;
+      if (matchesExclude(fullPath, basePath, compiledPatterns)) continue;
       try {
         const content = await readFile(fullPath, 'utf-8');
         files.push({ path: fullPath, content });
@@ -123,9 +126,10 @@ const extractToolDefinitions = (sourceFiles: SourceFile[]): ToolDefinition[] => 
   return tools;
 };
 
+// Note: schema extraction is not yet tool-specific; toolName is reserved for future use
 const extractSchema = (
   content: string,
-  _toolName: string,
+  toolName: string,
 ): Record<string, unknown> | undefined => {
   const regex = new RegExp(SCHEMA_PATTERN.source, SCHEMA_PATTERN.flags);
   let match;

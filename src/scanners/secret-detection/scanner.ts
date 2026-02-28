@@ -85,7 +85,7 @@ export class SecretDetectionScanner extends BaseScanner {
     targetPath: string,
   ): Finding[] {
     const findings: Finding[] = [];
-    const rule = this.getRule('SD004')!;
+    const rule = this.getRule('SD004');
     const textsToCheck: string[] = [];
 
     if (tool.inputSchema) {
@@ -136,7 +136,7 @@ export class SecretDetectionScanner extends BaseScanner {
   }
 
   private checkApiKeys(line: string, filePath: string, lineNum: number): Finding[] {
-    const rule = this.getRule('SD001')!;
+    const rule = this.getRule('SD001');
     const findings: Finding[] = [];
 
     for (const { name, pattern } of API_KEY_PATTERNS) {
@@ -161,7 +161,7 @@ export class SecretDetectionScanner extends BaseScanner {
     const value = match[1];
     if (this.isPlaceholder(value)) return [];
 
-    const rule = this.getRule('SD002')!;
+    const rule = this.getRule('SD002');
     return [
       this.createFinding(
         rule,
@@ -181,7 +181,7 @@ export class SecretDetectionScanner extends BaseScanner {
     const entropy = calculateShannonEntropy(value);
     if (entropy <= ENTROPY_THRESHOLD) return [];
 
-    const rule = this.getRule('SD003')!;
+    const rule = this.getRule('SD003');
     return [
       this.createFinding(
         rule,

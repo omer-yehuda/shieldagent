@@ -60,7 +60,7 @@ export class ToolPoisoningScanner extends BaseScanner {
   }
 
   private checkHiddenInstructions(desc: string, toolName: string, path: string): Finding[] {
-    const rule = this.getRule('TP001')!;
+    const rule = this.getRule('TP001');
     return HIDDEN_INSTRUCTION_PATTERNS
       .filter((p) => p.test(desc))
       .map((p) =>
@@ -72,7 +72,7 @@ export class ToolPoisoningScanner extends BaseScanner {
   }
 
   private checkPrivilegeEscalation(desc: string, toolName: string, path: string): Finding[] {
-    const rule = this.getRule('TP002')!;
+    const rule = this.getRule('TP002');
     return PRIVILEGE_ESCALATION_PATTERNS
       .filter((p) => p.test(desc))
       .map((p) =>
@@ -85,7 +85,7 @@ export class ToolPoisoningScanner extends BaseScanner {
   }
 
   private checkDataExfil(desc: string, toolName: string, path: string): Finding[] {
-    const rule = this.getRule('TP003')!;
+    const rule = this.getRule('TP003');
     return DATA_EXFIL_PATTERNS
       .filter((p) => p.test(desc))
       .map((p) =>
@@ -102,7 +102,7 @@ export class ToolPoisoningScanner extends BaseScanner {
     for (const trusted of TRUSTED_TOOL_NAMES) {
       const normalizedTrusted = trusted.replace(/[-_\s]/g, '');
       if (normalizedName === normalizedTrusted && toolName !== trusted) {
-        const rule = this.getRule('TP004')!;
+        const rule = this.getRule('TP004');
         return [
           this.createFinding(rule, `Tool "${toolName}" mimics trusted tool "${trusted}"`, {
             file: path,
@@ -115,7 +115,7 @@ export class ToolPoisoningScanner extends BaseScanner {
   }
 
   private checkCrossToolManipulation(desc: string, toolName: string, path: string): Finding[] {
-    const rule = this.getRule('TP005')!;
+    const rule = this.getRule('TP005');
     return CROSS_TOOL_PATTERNS
       .filter((p) => p.test(desc))
       .map((p) =>

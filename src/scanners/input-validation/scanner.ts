@@ -26,7 +26,7 @@ export class InputValidationScanner extends BaseScanner {
     const schema = tool.inputSchema;
 
     if (!schema) {
-      const rule = this.getRule('IV001')!;
+      const rule = this.getRule('IV001');
       findings.push(
         this.createFinding(rule, `Tool "${tool.name}" has no input schema defined`, {
           file: targetPath,
@@ -40,7 +40,7 @@ export class InputValidationScanner extends BaseScanner {
     const required = schema['required'] as string[] | undefined;
 
     if (!required || required.length === 0) {
-      const rule = this.getRule('IV003')!;
+      const rule = this.getRule('IV003');
       findings.push(
         this.createFinding(rule, `Tool "${tool.name}" has no required fields specified`, {
           file: targetPath,
@@ -67,7 +67,7 @@ export class InputValidationScanner extends BaseScanner {
     const findings: Finding[] = [];
 
     if (!schema['type']) {
-      const rule = this.getRule('IV002')!;
+      const rule = this.getRule('IV002');
       findings.push(
         this.createFinding(
           rule,
@@ -78,7 +78,7 @@ export class InputValidationScanner extends BaseScanner {
     }
 
     if (schema['type'] === 'string' && !schema['maxLength'] && !schema['enum'] && !schema['pattern']) {
-      const rule = this.getRule('IV004')!;
+      const rule = this.getRule('IV004');
       findings.push(
         this.createFinding(
           rule,
@@ -93,7 +93,7 @@ export class InputValidationScanner extends BaseScanner {
       schema['minimum'] === undefined &&
       schema['maximum'] === undefined
     ) {
-      const rule = this.getRule('IV005')!;
+      const rule = this.getRule('IV005');
       findings.push(
         this.createFinding(
           rule,
@@ -104,7 +104,7 @@ export class InputValidationScanner extends BaseScanner {
     }
 
     if (!schema['description']) {
-      const rule = this.getRule('IV006')!;
+      const rule = this.getRule('IV006');
       findings.push(
         this.createFinding(
           rule,

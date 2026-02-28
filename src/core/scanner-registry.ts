@@ -20,7 +20,8 @@ export class ScannerRegistry {
 
   getEnabled(enabledIds?: string[]): Scanner[] {
     if (!enabledIds) return this.getAll();
-    return this.getAll().filter((s) => enabledIds.includes(s.id));
+    const enabledSet = new Set<string>(enabledIds);
+    return this.getAll().filter((s) => enabledSet.has(s.id));
   }
 
   has(id: string): boolean {

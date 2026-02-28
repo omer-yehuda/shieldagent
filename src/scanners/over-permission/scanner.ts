@@ -75,7 +75,7 @@ export class OverPermissionScanner extends BaseScanner {
   private checkFsWrite(line: string, filePath: string, lineNum: number): Finding[] {
     for (const pattern of FS_WRITE_PATTERNS) {
       if (pattern.test(line)) {
-        const rule = this.getRule('OP001')!;
+        const rule = this.getRule('OP001');
         return [
           this.createFinding(rule, `Filesystem write operation detected`, {
             file: filePath,
@@ -90,7 +90,7 @@ export class OverPermissionScanner extends BaseScanner {
   private checkNetwork(line: string, filePath: string, lineNum: number): Finding[] {
     for (const pattern of NETWORK_PATTERNS) {
       if (pattern.test(line)) {
-        const rule = this.getRule('OP002')!;
+        const rule = this.getRule('OP002');
         return [
           this.createFinding(rule, `Outbound network access detected`, {
             file: filePath,
@@ -105,7 +105,7 @@ export class OverPermissionScanner extends BaseScanner {
   private checkProcess(line: string, filePath: string, lineNum: number): Finding[] {
     for (const pattern of PROCESS_PATTERNS) {
       if (pattern.test(line)) {
-        const rule = this.getRule('OP003')!;
+        const rule = this.getRule('OP003');
         return [
           this.createFinding(rule, `Process execution capability detected`, {
             file: filePath,
@@ -120,7 +120,7 @@ export class OverPermissionScanner extends BaseScanner {
   private checkEnvAccess(line: string, filePath: string, lineNum: number): Finding[] {
     for (const pattern of ENV_PATTERNS) {
       if (pattern.test(line)) {
-        const rule = this.getRule('OP004')!;
+        const rule = this.getRule('OP004');
         return [
           this.createFinding(rule, `Environment variable access detected`, {
             file: filePath,
@@ -137,7 +137,7 @@ export class OverPermissionScanner extends BaseScanner {
       if (pattern.test(line)) {
         // Skip import statements (just importing isn't a finding)
         if (/^import\s/.test(line.trimStart())) return [];
-        const rule = this.getRule('OP005')!;
+        const rule = this.getRule('OP005');
         return [
           this.createFinding(rule, `Database access capability detected`, {
             file: filePath,

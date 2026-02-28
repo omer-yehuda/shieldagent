@@ -49,7 +49,7 @@ export class PromptInjectionScanner extends BaseScanner {
     const properties = tool.inputSchema?.['properties'] as Record<string, Record<string, unknown>> | undefined;
     if (!properties) return findings;
 
-    const rule = this.getRule('PI001')!;
+    const rule = this.getRule('PI001');
 
     for (const [paramName, schema] of Object.entries(properties)) {
       const desc = schema['description'] as string | undefined;
@@ -80,7 +80,7 @@ export class PromptInjectionScanner extends BaseScanner {
     const properties = tool.inputSchema?.['properties'] as Record<string, Record<string, unknown>> | undefined;
     if (!properties) return findings;
 
-    const rule = this.getRule('PI002')!;
+    const rule = this.getRule('PI002');
 
     for (const [paramName, schema] of Object.entries(properties)) {
       const defaultVal = schema['default'];
@@ -111,7 +111,7 @@ export class PromptInjectionScanner extends BaseScanner {
     const properties = tool.inputSchema?.['properties'] as Record<string, Record<string, unknown>> | undefined;
     if (!properties) return findings;
 
-    const rule = this.getRule('PI003')!;
+    const rule = this.getRule('PI003');
 
     for (const [paramName, schema] of Object.entries(properties)) {
       const enumValues = schema['enum'] as unknown[] | undefined;
@@ -139,21 +139,19 @@ export class PromptInjectionScanner extends BaseScanner {
 
   private checkErrorMessages(content: string, filePath: string): Finding[] {
     const findings: Finding[] = [];
-    const rule = this.getRule('PI004')!;
+    const rule = this.getRule('PI004');
+    const lines = content.split('\n');
 
-    for (const pattern of ERROR_INJECTION_PATTERNS) {
-      if (pattern.test(content)) {
-        const lines = content.split('\n');
-        for (let i = 0; i < lines.length; i++) {
-          if (pattern.test(lines[i]!)) {
-            findings.push(
-              this.createFinding(
-                rule,
-                `Error message template contains injection pattern`,
-                { file: filePath, line: i + 1 },
-              ),
-            );
-          }
+    for (let i = 0; i < lines.length; i++) {
+      for (const pattern of ERROR_INJECTION_PATTERNS) {
+        if (pattern.test(lines[i]!)) {
+          findings.push(
+            this.createFinding(
+              rule,
+              `Error message template contains injection pattern`,
+              { file: filePath, line: i + 1 },
+            ),
+          );
         }
       }
     }

@@ -58,7 +58,7 @@ export class AuthTransportScanner extends BaseScanner {
     }
 
     if (!hasAuth && target.sourceFiles.length > 0) {
-      const rule = this.getRule('AT001')!;
+      const rule = this.getRule('AT001');
       findings.push(
         this.createFinding(rule, 'No authentication mechanism detected in MCP server', {
           file: target.path,
@@ -71,7 +71,7 @@ export class AuthTransportScanner extends BaseScanner {
     }
 
     if (hasHttpTransport && !hasCors) {
-      const rule = this.getRule('AT004')!;
+      const rule = this.getRule('AT004');
       findings.push(
         this.createFinding(rule, 'HTTP transport detected without CORS configuration', {
           file: target.path,
@@ -80,7 +80,7 @@ export class AuthTransportScanner extends BaseScanner {
     }
 
     if (!hasRateLimit && target.sourceFiles.length > 0) {
-      const rule = this.getRule('AT005')!;
+      const rule = this.getRule('AT005');
       findings.push(
         this.createFinding(rule, 'No rate limiting detected on server endpoints', {
           file: target.path,
@@ -93,7 +93,7 @@ export class AuthTransportScanner extends BaseScanner {
 
   private checkHardcodedCredentials(content: string, filePath: string): Finding[] {
     const findings: Finding[] = [];
-    const rule = this.getRule('AT003')!;
+    const rule = this.getRule('AT003');
     const lines = content.split('\n');
 
     for (let i = 0; i < lines.length; i++) {
@@ -103,8 +103,8 @@ export class AuthTransportScanner extends BaseScanner {
       if (filePath.includes('.test.') || filePath.includes('.spec.') || filePath.includes('__test__')) continue;
 
       for (const { pattern, type } of CREDENTIAL_PATTERNS) {
-        const regex = new RegExp(pattern.source, pattern.flags);
-        if (regex.test(line)) {
+        pattern.lastIndex = 0;
+        if (pattern.test(line)) {
           // Skip env references
           if (/process\.env|import\.meta\.env|ENV\[/i.test(line)) continue;
 
@@ -123,7 +123,7 @@ export class AuthTransportScanner extends BaseScanner {
 
   private checkInsecureTransport(target: ScanTarget): Finding[] {
     const findings: Finding[] = [];
-    const rule = this.getRule('AT002')!;
+    const rule = this.getRule('AT002');
 
     for (const file of target.sourceFiles) {
       const lines = file.content.split('\n');

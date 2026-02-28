@@ -56,7 +56,7 @@ export class DataExfiltrationScanner extends BaseScanner {
     const hasNetworkSend = this.hasNetworkSending(content);
 
     if (hasSensitiveRead && hasNetworkSend) {
-      const rule = this.getRule('DE001')!;
+      const rule = this.getRule('DE001');
       findings.push(
         this.createFinding(
           rule,
@@ -96,7 +96,7 @@ export class DataExfiltrationScanner extends BaseScanner {
   private checkEnvSecrets(line: string, filePath: string, lineNum: number): Finding[] {
     for (const pattern of SENSITIVE_ENV_PATTERNS) {
       if (pattern.test(line)) {
-        const rule = this.getRule('DE002')!;
+        const rule = this.getRule('DE002');
         return [
           this.createFinding(rule, `Access to sensitive environment variable detected`, {
             file: filePath,
@@ -111,7 +111,7 @@ export class DataExfiltrationScanner extends BaseScanner {
   private checkSensitiveFiles(line: string, filePath: string, lineNum: number): Finding[] {
     for (const pattern of SENSITIVE_FILE_PATTERNS) {
       if (pattern.test(line)) {
-        const rule = this.getRule('DE003')!;
+        const rule = this.getRule('DE003');
         return [
           this.createFinding(rule, `Read access to sensitive file detected`, {
             file: filePath,
@@ -133,7 +133,7 @@ export class DataExfiltrationScanner extends BaseScanner {
       if (pattern.test(line)) {
         // Only flag if file also has network access
         if (this.hasNetworkSending(fullContent)) {
-          const rule = this.getRule('DE004')!;
+          const rule = this.getRule('DE004');
           return [
             this.createFinding(rule, `Base64 encoding detected with network access in file`, {
               file: filePath,
@@ -149,7 +149,7 @@ export class DataExfiltrationScanner extends BaseScanner {
   private checkDnsExfil(line: string, filePath: string, lineNum: number): Finding[] {
     for (const pattern of DNS_EXFIL_PATTERNS) {
       if (pattern.test(line)) {
-        const rule = this.getRule('DE005')!;
+        const rule = this.getRule('DE005');
         return [
           this.createFinding(rule, `Potential DNS exfiltration pattern detected`, {
             file: filePath,

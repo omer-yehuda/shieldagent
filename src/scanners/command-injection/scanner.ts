@@ -58,7 +58,7 @@ export class CommandInjectionScanner extends BaseScanner {
 
       findings.push(...this.checkExecUsage(line, filePath, lineNum, content));
       findings.push(...this.checkEvalUsage(line, filePath, lineNum));
-      findings.push(...this.checkShellOption(line, filePath, lineNum, content, i));
+      findings.push(...this.checkShellOption(line, filePath, lineNum, lines, i));
       findings.push(...this.checkTemplateLiteral(line, filePath, lineNum));
       findings.push(...this.checkStringConcat(line, filePath, lineNum));
     }
@@ -70,8 +70,8 @@ export class CommandInjectionScanner extends BaseScanner {
     const hasImport = /child_process|require\s*\(\s*['"`]child_process['"`]\s*\)/.test(fullContent);
     if (!hasImport) return [];
 
-    const directMatch = new RegExp(DIRECT_EXEC_PATTERN.source, 'g');
-    if (directMatch.test(line)) {
+    DIRECT_EXEC_PATTERN.lastIndex = 0;
+    if (DIRECT_EXEC_PATTERN.test(line)) {
       // Check if the argument contains a variable (not a string literal)
       const argStart = line.indexOf('(');
       if (argStart === -1) return [];
@@ -82,7 +82,7 @@ export class CommandInjectionScanner extends BaseScanner {
         return [];
       }
 
-      const rule = this.getRule('CI001')!;
+      const rule = this.getRule('CI001');
       return [
         this.createFinding(rule, `Potentially unsanitized input in shell command`, {
           file: filePath,
@@ -95,12 +95,12 @@ export class CommandInjectionScanner extends BaseScanner {
   }
 
   private checkEvalUsage(line: string, filePath: string, lineNum: number): Finding[] {
-    const rule = this.getRule('CI002')!;
+    const rule = this.getRule('CI002');
     const findings: Finding[] = [];
 
     for (const pattern of EVAL_PATTERNS) {
-      const regex = new RegExp(pattern.source, pattern.flags);
-      if (regex.test(line)) {
+      pattern.lastIndex = 0;
+      if (pattern.test(line)) {
         findings.push(
           this.createFinding(rule, `eval() or dynamic code execution detected`, {
             file: filePath,
@@ -118,16 +118,16 @@ export class CommandInjectionScanner extends BaseScanner {
     line: string,
     filePath: string,
     lineNum: number,
-    content: string,
+    lines: string[],
     lineIdx: number,
   ): Finding[] {
-    const shellRegex = new RegExp(SHELL_TRUE_PATTERN.source, 'g');
-    if (!shellRegex.test(line)) return [];
+    SHELL_TRUE_PATTERN.lastIndex = 0;
+    if (!SHELL_TRUE_PATTERN.test(line)) return [];
 
     // Check if this is near a spawn call (within 5 lines)
-    const context = content.split('\n').slice(Math.max(0, lineIdx - 5), lineIdx + 5).join('\n');
+    const context = lines.slice(Math.max(0, lineIdx - 5), lineIdx + 5).join('\n');
     if (/spawn|spawnSync/.test(context)) {
-      const rule = this.getRule('CI003')!;
+      const rule = this.getRule('CI003');
       return [
         this.createFinding(rule, `spawn used with shell: true enables shell injection`, {
           file: filePath,
@@ -140,9 +140,9 @@ export class CommandInjectionScanner extends BaseScanner {
   }
 
   private checkTemplateLiteral(line: string, filePath: string, lineNum: number): Finding[] {
-    const regex = new RegExp(TEMPLATE_IN_EXEC_PATTERN.source, 'g');
-    if (regex.test(line)) {
-      const rule = this.getRule('CI004')!;
+    TEMPLATE_IN_EXEC_PATTERN.lastIndex = 0;
+    if (TEMPLATE_IN_EXEC_PATTERN.test(line)) {
+      const rule = this.getRule('CI004');
       return [
         this.createFinding(rule, `Template literal with variables in shell command`, {
           file: filePath,
@@ -154,9 +154,9 @@ export class CommandInjectionScanner extends BaseScanner {
   }
 
   private checkStringConcat(line: string, filePath: string, lineNum: number): Finding[] {
-    const regex = new RegExp(CONCAT_IN_EXEC_PATTERN.source, 'g');
-    if (regex.test(line)) {
-      const rule = this.getRule('CI005')!;
+    CONCAT_IN_EXEC_PATTERN.lastIndex = 0;
+    if (CONCAT_IN_EXEC_PATTERN.test(line)) {
+      const rule = this.getRule('CI005');
       return [
         this.createFinding(rule, `String concatenation used to build shell command`, {
           file: filePath,

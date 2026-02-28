@@ -1,6 +1,14 @@
 import type { Finding, ScanOptions, ScanResult, ScannerResult, ScanTarget } from './types.js';
 import type { ScannerRegistry } from './scanner-registry.js';
 
+const SEVERITY_ORDER: Record<string, number> = {
+  critical: 0,
+  high: 1,
+  medium: 2,
+  low: 3,
+  info: 4,
+};
+
 export class ScanEngine {
   constructor(private readonly registry: ScannerRegistry) {}
 
@@ -59,13 +67,6 @@ export class ScanEngine {
   }
 
   private sortFindings(findings: Finding[]): Finding[] {
-    const severityOrder: Record<string, number> = {
-      critical: 0,
-      high: 1,
-      medium: 2,
-      low: 3,
-      info: 4,
-    };
-    return findings.sort((a, b) => severityOrder[a.severity] - severityOrder[b.severity]);
+    return findings.sort((a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity]);
   }
 }

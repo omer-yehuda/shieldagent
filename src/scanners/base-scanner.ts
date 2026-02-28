@@ -32,7 +32,11 @@ export abstract class BaseScanner implements Scanner {
     return createHash('sha256').update(raw).digest('hex');
   }
 
-  protected getRule(ruleId: string): Rule | undefined {
-    return this.rules.find((r) => r.id === ruleId);
+  protected getRule(ruleId: string): Rule {
+    const rule = this.rules.find((r) => r.id === ruleId);
+    if (!rule) {
+      throw new Error(`Scanner "${this.id}": rule "${ruleId}" not found`);
+    }
+    return rule;
   }
 }

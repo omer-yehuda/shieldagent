@@ -43,7 +43,7 @@ export class SupplyChainScanner extends BaseScanner {
 
   private checkInstallScripts(manifest: PackageManifest, path: string): Finding[] {
     const findings: Finding[] = [];
-    const rule = this.getRule('SC001')!;
+    const rule = this.getRule('SC001');
     const scripts = manifest.scripts ?? {};
 
     for (const scriptName of DANGEROUS_SCRIPTS) {
@@ -78,7 +78,7 @@ export class SupplyChainScanner extends BaseScanner {
   }
 
   private checkTyposquatting(depName: string, path: string): Finding[] {
-    const rule = this.getRule('SC002')!;
+    const rule = this.getRule('SC002');
 
     for (const popular of POPULAR_PACKAGES) {
       if (depName === popular) continue;
@@ -97,7 +97,7 @@ export class SupplyChainScanner extends BaseScanner {
   }
 
   private checkSuspiciousName(depName: string, path: string): Finding[] {
-    const rule = this.getRule('SC004')!;
+    const rule = this.getRule('SC004');
 
     for (const pattern of SUSPICIOUS_NAME_PATTERNS) {
       if (pattern.test(depName)) {
@@ -116,7 +116,7 @@ export class SupplyChainScanner extends BaseScanner {
 
   private checkVersionPinning(depName: string, version: string, path: string): Finding[] {
     if (version.startsWith('*') || version === 'latest' || version.startsWith('>')) {
-      const rule = this.getRule('SC003')!;
+      const rule = this.getRule('SC003');
       return [
         this.createFinding(
           rule,
@@ -138,13 +138,14 @@ export class SupplyChainScanner extends BaseScanner {
       }
     }
 
-    const rule = this.getRule('SC005')!;
+    const rule = this.getRule('SC005');
     return [
       this.createFinding(rule, 'No lockfile found in project', { file: path }),
     ];
   }
 
   private levenshteinDistance(a: string, b: string): number {
+    if (Math.abs(a.length - b.length) > 1) return a.length + b.length;
     const matrix: number[][] = [];
 
     for (let i = 0; i <= a.length; i++) {
