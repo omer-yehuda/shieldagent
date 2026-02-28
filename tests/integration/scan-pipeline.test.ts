@@ -66,7 +66,7 @@ describe('Integration: Scan Pipeline', () => {
 
     const result = await engine.scan(target);
 
-    expect(result.scanners).toHaveLength(8);
+    expect(result.scanners).toHaveLength(9);
     for (const scanner of result.scanners) {
       expect(scanner.error).toBeUndefined();
       expect(scanner.duration).toBeGreaterThanOrEqual(0);

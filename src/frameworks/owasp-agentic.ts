@@ -52,7 +52,7 @@ export const OWASP_AGENTIC_TOP_10: FrameworkItem[] = [
     id: 'AT-08',
     name: 'Credential Exposure',
     description: 'Hardcoded secrets, tokens, or credentials in source code',
-    relatedRules: ['AT003'],
+    relatedRules: ['AT003', 'SD001', 'SD002', 'SD003', 'SD004'],
   },
   {
     id: 'AT-09',

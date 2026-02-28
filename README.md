@@ -78,6 +78,7 @@ shieldagent scan ./my-mcp-server --exclude "tests/**" "fixtures/**"
 | Command Injection | AST | critical | Unsanitized input to exec/spawn/eval |
 | Over-Permission | AST | medium - high | Excessive capabilities vs description |
 | Data Exfiltration | AST | high - critical | Sensitive data read + outbound network |
+| Secret Detection | Pattern | medium - critical | Hardcoded API keys, tokens, credentials |
 
 ## Compliance Frameworks
 
