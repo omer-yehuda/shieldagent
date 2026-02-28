@@ -7,6 +7,7 @@ import { SupplyChainScanner } from './supply-chain/index.js';
 import { CommandInjectionScanner } from './command-injection/index.js';
 import { OverPermissionScanner } from './over-permission/index.js';
 import { DataExfiltrationScanner } from './data-exfiltration/index.js';
+import { SecretDetectionScanner } from './secret-detection/index.js';
 
 export const createDefaultRegistry = (): ScannerRegistry => {
   const registry = new ScannerRegistry();
@@ -19,6 +20,7 @@ export const createDefaultRegistry = (): ScannerRegistry => {
   registry.register(new CommandInjectionScanner());
   registry.register(new OverPermissionScanner());
   registry.register(new DataExfiltrationScanner());
+  registry.register(new SecretDetectionScanner());
 
   return registry;
 };
@@ -32,4 +34,5 @@ export {
   CommandInjectionScanner,
   OverPermissionScanner,
   DataExfiltrationScanner,
+  SecretDetectionScanner,
 };

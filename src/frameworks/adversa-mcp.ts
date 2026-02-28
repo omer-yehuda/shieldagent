@@ -38,6 +38,12 @@ export const ADVERSA_MCP_TOP_25: FrameworkItem[] = [
     relatedRules: ['DE001', 'DE003'],
   },
   {
+    id: 'MCP-07',
+    name: 'Credential Leakage in Tool Definitions',
+    description: 'Hardcoded secrets, API keys, or credentials in tool definitions',
+    relatedRules: ['SD004'],
+  },
+  {
     id: 'MCP-08',
     name: 'Lack of Authentication',
     description: 'MCP server has no auth mechanism',

@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial release of ShieldAgent
-- 8 security scanners: tool poisoning, command injection, data exfiltration, prompt injection, over-permissions, input validation, auth/transport, supply chain
+- 9 security scanners: tool poisoning, command injection, data exfiltration, prompt injection, over-permissions, input validation, auth/transport, supply chain, secret detection
 - MCP server loader with file discovery and tool extraction
 - OWASP Agentic Top 10 compliance mapping
 - Adversa MCP Top 25 compliance mapping
