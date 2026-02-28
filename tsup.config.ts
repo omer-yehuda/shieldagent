@@ -1,17 +1,25 @@
 import { defineConfig } from 'tsup';
 
-export default defineConfig({
-  entry: {
-    index: 'src/index.ts',
-    'cli/index': 'src/cli/index.ts',
+export default defineConfig([
+  {
+    entry: { index: 'src/index.ts' },
+    format: ['esm'],
+    dts: true,
+    sourcemap: true,
+    clean: true,
+    target: 'node18',
+    splitting: false,
   },
-  format: ['esm'],
-  dts: true,
-  sourcemap: true,
-  clean: true,
-  target: 'node18',
-  splitting: false,
-  banner: {
-    js: '#!/usr/bin/env node',
+  {
+    entry: { 'cli/index': 'src/cli/index.ts' },
+    format: ['esm'],
+    dts: false,
+    sourcemap: true,
+    clean: false,
+    target: 'node18',
+    splitting: false,
+    banner: {
+      js: '#!/usr/bin/env node',
+    },
   },
-});
+]);

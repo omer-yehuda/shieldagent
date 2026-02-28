@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+
 import type { Finding, Rule, ScanTarget, Scanner, ScannerCategory } from '../core/types.js';
 
 export abstract class BaseScanner implements Scanner {
@@ -27,13 +29,7 @@ export abstract class BaseScanner implements Scanner {
 
   private generateFingerprint(ruleId: string, location: Finding['location']): string {
     const raw = `${ruleId}:${location.file}:${location.line ?? 0}:${location.toolName ?? ''}`;
-    let hash = 0;
-    for (let i = 0; i < raw.length; i++) {
-      const char = raw.charCodeAt(i);
-      hash = (hash << 5) - hash + char;
-      hash |= 0;
-    }
-    return Math.abs(hash).toString(16).padStart(8, '0');
+    return createHash('sha256').update(raw).digest('hex');
   }
 
   protected getRule(ruleId: string): Rule | undefined {

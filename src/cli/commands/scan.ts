@@ -13,12 +13,14 @@ export const scanCommand = new Command('scan')
   .option('-f, --format <format>', 'Output format: table, json, sarif', 'table')
   .option('--ci', 'CI mode: exit with code 1 if findings detected', false)
   .option('-s, --scanners <scanners...>', 'Specific scanners to run')
+  .option('-e, --exclude <patterns...>', 'Glob patterns to exclude from scanning')
   .option('-c, --config <path>', 'Path to config file')
   .option('-v, --verbose', 'Verbose output', false)
   .action(async (targetPath: string, options: {
     format: string;
     ci: boolean;
     scanners?: string[];
+    exclude?: string[];
     config?: string;
     verbose: boolean;
   }) => {
@@ -27,6 +29,7 @@ export const scanCommand = new Command('scan')
       const config = await loadConfig(resolvedPath, options.config);
 
       const format = (options.format as OutputFormat) ?? config.format;
+      const excludePatterns = options.exclude ?? config.exclude;
 
       if (format === 'table') {
         process.stderr.write('\n  Scanning for vulnerabilities...\n\n');
@@ -34,7 +37,7 @@ export const scanCommand = new Command('scan')
 
       const registry = createDefaultRegistry();
       const engine = new ScanEngine(registry);
-      const target = await loadMCPServer(resolvedPath);
+      const target = await loadMCPServer(resolvedPath, excludePatterns);
 
       const enabledScanners = options.scanners ??
         Object.entries(config.scanners)

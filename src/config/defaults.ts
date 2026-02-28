@@ -11,7 +11,7 @@ export const DEFAULT_CONFIG: ShieldAgentConfig = {
     'over-permission': { enabled: true },
     'data-exfiltration': { enabled: true },
   },
-  exclude: ['node_modules/**', 'dist/**', '.git/**'],
+  exclude: ['node_modules/**', 'dist/**', '.git/**', 'tests/fixtures/**', '**/*.test.ts', '**/*.spec.ts'],
   format: 'table',
   ci: false,
 };

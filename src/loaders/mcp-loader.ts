@@ -1,5 +1,5 @@
 import { readFile, readdir, stat } from 'fs/promises';
-import { join, resolve, extname } from 'path';
+import { join, resolve, extname, relative } from 'path';
 import type {
   ScanTarget,
   ToolDefinition,
@@ -20,9 +20,12 @@ const TOOL_DEFINITION_PATTERNS = [
 const SCHEMA_PATTERN =
   /(?:inputSchema|schema|parameters)\s*:\s*(\{[\s\S]*?\})\s*(?:,|\})/g;
 
-export const loadMCPServer = async (targetPath: string): Promise<ScanTarget> => {
+export const loadMCPServer = async (
+  targetPath: string,
+  excludePatterns: string[] = [],
+): Promise<ScanTarget> => {
   const resolvedPath = resolve(targetPath);
-  const sourceFiles = await collectSourceFiles(resolvedPath);
+  const sourceFiles = await collectSourceFiles(resolvedPath, excludePatterns);
   const tools = extractToolDefinitions(sourceFiles);
   const manifest = await loadManifest(resolvedPath);
 
@@ -34,13 +37,34 @@ export const loadMCPServer = async (targetPath: string): Promise<ScanTarget> => 
   };
 };
 
-const collectSourceFiles = async (dirPath: string): Promise<SourceFile[]> => {
+const matchesExclude = (filePath: string, basePath: string, patterns: string[]): boolean => {
+  const rel = relative(basePath, filePath).replace(/\\/g, '/');
+  return patterns.some((pattern) => {
+    // Convert glob to regex: ** = any path, * = any segment
+    const regexStr = pattern
+      .replace(/\./g, '\\.')
+      .replace(/\*\*/g, '{{GLOBSTAR}}')
+      .replace(/\*/g, '[^/]*')
+      .replace(/\{\{GLOBSTAR\}\}/g, '.*');
+    return new RegExp(`^${regexStr}$`).test(rel);
+  });
+};
+
+const collectSourceFiles = async (
+  dirPath: string,
+  excludePatterns: string[],
+): Promise<SourceFile[]> => {
   const files: SourceFile[] = [];
-  await walkDirectory(dirPath, files);
+  await walkDirectory(dirPath, files, dirPath, excludePatterns);
   return files;
 };
 
-const walkDirectory = async (dirPath: string, files: SourceFile[]): Promise<void> => {
+const walkDirectory = async (
+  dirPath: string,
+  files: SourceFile[],
+  basePath: string,
+  excludePatterns: string[],
+): Promise<void> => {
   const skipDirs = new Set(['node_modules', 'dist', '.git', 'coverage', '.next']);
 
   let entries;
@@ -55,9 +79,10 @@ const walkDirectory = async (dirPath: string, files: SourceFile[]): Promise<void
 
     if (entry.isDirectory()) {
       if (!skipDirs.has(entry.name)) {
-        await walkDirectory(fullPath, files);
+        await walkDirectory(fullPath, files, basePath, excludePatterns);
       }
     } else if (entry.isFile() && TS_EXTENSIONS.has(extname(entry.name))) {
+      if (matchesExclude(fullPath, basePath, excludePatterns)) continue;
       try {
         const content = await readFile(fullPath, 'utf-8');
         files.push({ path: fullPath, content });
