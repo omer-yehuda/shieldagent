@@ -44,7 +44,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/omer-yehuda/shieldagent.git"
+    "url": "git+https://github.com/omer-yehuda/shieldagent.git"
   },
   "homepage": "https://github.com/omer-yehuda/shieldagent#readme",
   "bugs": {
