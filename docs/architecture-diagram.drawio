@@ -1,132 +1,29 @@
 <mxfile host="app.diagrams.net" agent="Claude Code" version="24.0.0" type="device">
-  <diagram id="shieldagent-architecture" name="ShieldAgent Architecture">
-    <mxGraphModel dx="2200" dy="1600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+  <diagram id="sa" name="ShieldAgent">
+    <mxGraphModel dx="2200" dy="1600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="1200">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="actor-dev" value="Developer&#xa;/ CI Pipeline" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#E7157B;strokeColor=#B3114F;fontStyle=1;fontSize=11;fontColor=#333333;" vertex="1" parent="1">
-          <mxGeometry x="-40" y="200" width="40" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="cloud-cli" value="CLI Layer" style="shape=mxgraph.aws3.cloud;fillColor=#FCE4EC;strokeColor=#F48FB1;fontStyle=1;fontSize=14;verticalAlign=top;spacingTop=-5;fontColor=#333333;" vertex="1" parent="1">
-          <mxGeometry x="50" y="20" width="300" height="150" as="geometry" />
-        </mxCell>
-        <mxCell id="commander" value="Commander.js CLI&#xa;scan &lt;path&gt; | report" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7157B;strokeColor=#B3114F;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="80" y="55" width="180" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="zod-input" value="Zod v4&#xa;Input Validation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7157B;strokeColor=#B3114F;fontColor=#FFFFFF;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="80" y="110" width="120" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="cloud-config" value="Configuration" style="shape=mxgraph.aws3.cloud;fillColor=#ECEFF1;strokeColor=#B0BEC5;fontStyle=1;fontSize=14;verticalAlign=top;spacingTop=-5;fontColor=#333333;" vertex="1" parent="1">
-          <mxGeometry x="380" y="20" width="250" height="150" as="geometry" />
-        </mxCell>
-        <mxCell id="config-loader" value="Config Loader&#xa;.shieldagentrc.json" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#232F3E;strokeColor=#1A2530;fontColor=#FFFFFF;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="410" y="55" width="160" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="config-defaults" value="Defaults&#xa;(8 scanners enabled)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#232F3E;strokeColor=#1A2530;fontColor=#FFFFFF;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="410" y="110" width="160" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="cloud-loader" value="MCP Loader" style="shape=mxgraph.aws3.cloud;fillColor=#ECEFF1;strokeColor=#B0BEC5;fontStyle=1;fontSize=14;verticalAlign=top;spacingTop=-5;fontColor=#333333;" vertex="1" parent="1">
-          <mxGeometry x="50" y="200" width="300" height="170" as="geometry" />
-        </mxCell>
-        <mxCell id="fs-walker" value="FS Walker&#xa;(.ts/.js/.mjs/.mts)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#232F3E;strokeColor=#1A2530;fontColor=#FFFFFF;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="80" y="235" width="130" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="tool-extractor" value="Tool Extractor&#xa;(Regex-based)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#232F3E;strokeColor=#1A2530;fontColor=#FFFFFF;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="230" y="235" width="110" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="scan-target" value="→ ScanTarget" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E73B8;strokeColor=#1A5A9E;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="130" y="300" width="120" height="35" as="geometry" />
-        </mxCell>
-        <mxCell id="cloud-engine" value="Core Engine" style="shape=mxgraph.aws3.cloud;fillColor=#FFF3E0;strokeColor=#FFCC80;fontStyle=1;fontSize=14;verticalAlign=top;spacingTop=-5;fontColor=#333333;" vertex="1" parent="1">
-          <mxGeometry x="380" y="200" width="350" height="170" as="geometry" />
-        </mxCell>
-        <mxCell id="scan-engine" value="ScanEngine&#xa;(Orchestrator)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ED7100;strokeColor=#C45E00;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="410" y="240" width="150" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="scanner-registry" value="ScannerRegistry&#xa;(Map-based)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ED7100;strokeColor=#C45E00;fontColor=#FFFFFF;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="580" y="240" width="120" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="promise-all" value="Promise.allSettled()&#xa;(Parallel execution)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ED7100;strokeColor=#C45E00;fontColor=#FFFFFF;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="430" y="310" width="160" height="35" as="geometry" />
-        </mxCell>
-        <mxCell id="cloud-scanners" value="Security Scanners (8)" style="shape=mxgraph.aws3.cloud;fillColor=#E0F2F1;strokeColor=#80CBC4;fontStyle=1;fontSize=14;verticalAlign=top;spacingTop=-5;fontColor=#333333;" vertex="1" parent="1">
-          <mxGeometry x="50" y="410" width="680" height="180" as="geometry" />
-        </mxCell>
-        <mxCell id="base-scanner" value="BaseScanner (Abstract)&#xa;SHA-256 Fingerprints" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#01A88D;strokeColor=#017A67;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="250" y="440" width="180" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="schema-scanners" value="Schema&#xa;Input Validation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#01A88D;strokeColor=#017A67;fontColor=#FFFFFF;fontStyle=0;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="80" y="500" width="110" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="pattern-scanners" value="Pattern&#xa;Tool Poisoning | Prompt Injection&#xa;Auth &amp; Transport | Supply Chain" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#01A88D;strokeColor=#017A67;fontColor=#FFFFFF;fontStyle=0;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="210" y="500" width="220" height="55" as="geometry" />
-        </mxCell>
-        <mxCell id="ast-scanners" value="AST/Code&#xa;Command Injection&#xa;Over-Permission | Data Exfil" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#01A88D;strokeColor=#017A67;fontColor=#FFFFFF;fontStyle=0;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="450" y="500" width="170" height="55" as="geometry" />
-        </mxCell>
-        <mxCell id="cloud-output" value="Reporter / Output" style="shape=mxgraph.aws3.cloud;fillColor=#E3F2FD;strokeColor=#90CAF9;fontStyle=1;fontSize=14;verticalAlign=top;spacingTop=-5;fontColor=#333333;" vertex="1" parent="1">
-          <mxGeometry x="50" y="630" width="400" height="150" as="geometry" />
-        </mxCell>
-        <mxCell id="table-reporter" value="Table Reporter&#xa;(chalk + cli-table3)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E73B8;strokeColor=#1A5A9E;fontColor=#FFFFFF;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="80" y="665" width="130" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="json-reporter" value="JSON Reporter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E73B8;strokeColor=#1A5A9E;fontColor=#FFFFFF;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="230" y="665" width="100" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="sarif-reporter" value="SARIF Reporter&#xa;(v2.1.0)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E73B8;strokeColor=#1A5A9E;fontColor=#FFFFFF;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="350" y="665" width="100" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="exit-codes" value="Exit Codes: 0=pass | 1=findings | 2=error" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#232F3E;strokeColor=#1A2530;fontColor=#FFFFFF;fontStyle=0;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="80" y="725" width="230" height="35" as="geometry" />
-        </mxCell>
-        <mxCell id="cloud-compliance" value="Compliance Frameworks" style="shape=mxgraph.aws3.cloud;fillColor=#FCE4EC;strokeColor=#F48FB1;fontStyle=1;fontSize=13;verticalAlign=top;spacingTop=-5;fontColor=#333333;" vertex="1" parent="1">
-          <mxGeometry x="480" y="630" width="250" height="150" as="geometry" />
-        </mxCell>
-        <mxCell id="owasp" value="OWASP Agentic Top 10&#xa;(AT-01 to AT-10)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7157B;strokeColor=#B3114F;fontColor=#FFFFFF;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="510" y="670" width="170" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="adversa" value="Adversa MCP Top 25&#xa;(MCP-01 to MCP-21)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7157B;strokeColor=#B3114F;fontColor=#FFFFFF;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="510" y="720" width="170" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="target-server" value="Target MCP Server&#xa;(Scanned Codebase)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#232F3E;strokeColor=#1A2530;fontColor=#FFFFFF;fontStyle=1;fontSize=10;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="660" y="200" width="160" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;strokeColor=#666666;" edge="1" parent="1" source="actor-dev" target="commander">
-          <mxGeometry relative="1" as="geometry" />
-          <mxCell value="shieldagent scan ./src" style="edgeLabel;html=1;fontSize=9;fontColor=#333333;" vertex="1" connectable="0" as="value"><mxGeometry relative="1" as="geometry" /></mxCell>
-        </mxCell>
-        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;strokeColor=#E7157B;" edge="1" parent="1" source="commander" target="config-loader">
-          <mxGeometry relative="1" as="geometry" />
-          <mxCell value="Load config" style="edgeLabel;html=1;fontSize=9;fontColor=#333333;" vertex="1" connectable="0" as="value"><mxGeometry relative="1" as="geometry" /></mxCell>
-        </mxCell>
-        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;strokeColor=#232F3E;" edge="1" parent="1" source="commander" target="fs-walker">
-          <mxGeometry relative="1" as="geometry" />
-          <mxCell value="Scan path" style="edgeLabel;html=1;fontSize=9;fontColor=#333333;" vertex="1" connectable="0" as="value"><mxGeometry relative="1" as="geometry" /></mxCell>
-        </mxCell>
-        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;strokeColor=#232F3E;" edge="1" parent="1" source="fs-walker" target="tool-extractor">
-          <mxGeometry relative="1" as="geometry" />
-          <mxCell value="Source files" style="edgeLabel;html=1;fontSize=9;fontColor=#333333;" vertex="1" connectable="0" as="value"><mxGeometry relative="1" as="geometry" /></mxCell>
-        </mxCell>
-        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;strokeColor=#2E73B8;" edge="1" parent="1" source="scan-target" target="scan-engine">
-          <mxGeometry relative="1" as="geometry" />
-          <mxCell value="ScanTarget input" style="edgeLabel;html=1;fontSize=9;fontColor=#333333;" vertex="1" connectable="0" as="value"><mxGeometry relative="1" as="geometry" /></mxCell>
-        </mxCell>
-        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;strokeColor=#ED7100;" edge="1" parent="1" source="scan-engine" target="scanner-registry">
-          <mxGeometry relative="1" as="geometry" />
-          <mxCell value="Get scanners" style="edgeLabel;html=1;fontSize=9;fontColor=#333333;" vertex="1" connectable="0" as="value"><mxGeometry relative="1" as="geometry" /></mxCell>
-        </mxCell>
-        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;strokeColor=#01A88D;strokeWidth=2;" edge="1" parent="1" source="scan-engine" target="base-scanner">
-          <mxGeometry relative="1" as="geometry" />
-          <mxCell value="Run all scanners" style="edgeLabel;html=1;fontSize=9;fontColor=#333333;fontStyle=1;" vertex="1" connectable="0" as="value"><mxGeometry relative="1" as="geometry" /></mxCell>
-        </mxCell>
-        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;strokeColor=#2E73B8;" edge="1" parent="1" source="scan-engine" target="table-reporter">
-          <mxGeometry relative="1" as="geometry" />
-          <mxCell value="ScanResult → format" style="edgeLabel;html=1;fontSize=9;fontColor=#333333;" vertex="1" connectable="0" as="value"><mxGeometry relative="1" as="geometry" /></mxCell>
-        </mxCell>
-        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;strokeColor=#E7157B;dashed=1;" edge="1" parent="1" source="base-scanner" target="owasp">
-          <mxGeometry relative="1" as="geometry" />
-          <mxCell value="FrameworkMapping[]" style="edgeLabel;html=1;fontSize=9;fontColor=#333333;" vertex="1" connectable="0" as="value"><mxGeometry relative="1" as="geometry" /></mxCell>
-        </mxCell>
+        <mxCell id="a" value="Developer / CI" style="shape=umlActor;fillColor=#E7157B;strokeColor=#B3114F;fontStyle=1;fontSize=11;fontColor=#333;" vertex="1" parent="1"><mxGeometry x="-40" y="200" width="40" height="60" as="geometry" /></mxCell>
+        <mxCell id="c1" value="CLI Layer" style="shape=mxgraph.aws3.cloud;fillColor=#FCE4EC;strokeColor=#F48FB1;fontStyle=1;fontSize=14;verticalAlign=top;fontColor=#333;" vertex="1" parent="1"><mxGeometry x="50" y="20" width="300" height="150" as="geometry" /></mxCell>
+        <mxCell id="cli" value="Commander.js CLI (scan/report)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7157B;strokeColor=#B3114F;fontColor=#FFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="80" y="55" width="200" height="45" as="geometry" /></mxCell>
+        <mxCell id="zod" value="Zod v4 Validation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7157B;strokeColor=#B3114F;fontColor=#FFF;fontSize=10;" vertex="1" parent="1"><mxGeometry x="80" y="110" width="140" height="40" as="geometry" /></mxCell>
+        <mxCell id="c2" value="Configuration" style="shape=mxgraph.aws3.cloud;fillColor=#ECEFF1;strokeColor=#B0BEC5;fontStyle=1;fontSize=14;verticalAlign=top;fontColor=#333;" vertex="1" parent="1"><mxGeometry x="380" y="20" width="250" height="150" as="geometry" /></mxCell>
+        <mxCell id="cfg" value="Config Loader (.shieldagentrc.json)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#232F3E;strokeColor=#1A2530;fontColor=#FFF;fontSize=10;" vertex="1" parent="1"><mxGeometry x="410" y="60" width="190" height="40" as="geometry" /></mxCell>
+        <mxCell id="c3" value="MCP Loader" style="shape=mxgraph.aws3.cloud;fillColor=#ECEFF1;strokeColor=#B0BEC5;fontStyle=1;fontSize=14;verticalAlign=top;fontColor=#333;" vertex="1" parent="1"><mxGeometry x="50" y="200" width="300" height="160" as="geometry" /></mxCell>
+        <mxCell id="fsw" value="FS Walker + Tool Extractor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#232F3E;strokeColor=#1A2530;fontColor=#FFF;fontSize=10;" vertex="1" parent="1"><mxGeometry x="80" y="240" width="200" height="40" as="geometry" /></mxCell>
+        <mxCell id="st" value="ScanTarget" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E73B8;strokeColor=#1A5A9E;fontColor=#FFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="130" y="300" width="110" height="35" as="geometry" /></mxCell>
+        <mxCell id="c4" value="Core Engine" style="shape=mxgraph.aws3.cloud;fillColor=#FFF3E0;strokeColor=#FFCC80;fontStyle=1;fontSize=14;verticalAlign=top;fontColor=#333;" vertex="1" parent="1"><mxGeometry x="380" y="200" width="350" height="160" as="geometry" /></mxCell>
+        <mxCell id="eng" value="ScanEngine + Registry" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ED7100;strokeColor=#C45E00;fontColor=#FFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="410" y="240" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="c5" value="Security Scanners (8)" style="shape=mxgraph.aws3.cloud;fillColor=#E0F2F1;strokeColor=#80CBC4;fontStyle=1;fontSize=14;verticalAlign=top;fontColor=#333;" vertex="1" parent="1"><mxGeometry x="50" y="400" width="680" height="170" as="geometry" /></mxCell>
+        <mxCell id="bs" value="BaseScanner (Abstract) SHA-256" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#01A88D;strokeColor=#017A67;fontColor=#FFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="230" y="430" width="210" height="35" as="geometry" /></mxCell>
+        <mxCell id="s1" value="Schema: Input Validation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#01A88D;strokeColor=#017A67;fontColor=#FFF;fontSize=9;" vertex="1" parent="1"><mxGeometry x="80" y="490" width="130" height="40" as="geometry" /></mxCell>
+        <mxCell id="s2" value="Pattern: Poisoning, Injection, Auth, Supply" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#01A88D;strokeColor=#017A67;fontColor=#FFF;fontSize=9;" vertex="1" parent="1"><mxGeometry x="230" y="490" width="220" height="40" as="geometry" /></mxCell>
+        <mxCell id="s3" value="AST: Cmd Injection, Over-Perm, Exfil" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#01A88D;strokeColor=#017A67;fontColor=#FFF;fontSize=9;" vertex="1" parent="1"><mxGeometry x="470" y="490" width="190" height="40" as="geometry" /></mxCell>
+        <mxCell id="c6" value="Reporters" style="shape=mxgraph.aws3.cloud;fillColor=#E3F2FD;strokeColor=#90CAF9;fontStyle=1;fontSize=14;verticalAlign=top;fontColor=#333;" vertex="1" parent="1"><mxGeometry x="50" y="610" width="350" height="100" as="geometry" /></mxCell>
+        <mxCell id="r1" value="Table | JSON | SARIF v2.1.0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E73B8;strokeColor=#1A5A9E;fontColor=#FFF;fontSize=10;" vertex="1" parent="1"><mxGeometry x="80" y="645" width="280" height="35" as="geometry" /></mxCell>
+        <mxCell id="c7" value="Compliance" style="shape=mxgraph.aws3.cloud;fillColor=#FCE4EC;strokeColor=#F48FB1;fontStyle=1;fontSize=13;verticalAlign=top;fontColor=#333;" vertex="1" parent="1"><mxGeometry x="430" y="610" width="300" height="100" as="geometry" /></mxCell>
+        <mxCell id="ow" value="OWASP Agentic Top 10 | Adversa MCP Top 25" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7157B;strokeColor=#B3114F;fontColor=#FFF;fontSize=10;" vertex="1" parent="1"><mxGeometry x="460" y="650" width="240" height="35" as="geometry" /></mxCell>
       </root>
     </mxGraphModel>
   </diagram>
