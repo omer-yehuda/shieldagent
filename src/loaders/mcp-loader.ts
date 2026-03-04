@@ -42,10 +42,11 @@ export const loadMCPServer = async (
 const compileExcludePatterns = (patterns: string[]): RegExp[] =>
   patterns.map((pattern) => {
     const regexStr = pattern
-      .replace(/\./g, '\\.')
       .replace(/\*\*/g, '{{GLOBSTAR}}')
-      .replace(/\*/g, '[^/]*')
-      .replace(/\{\{GLOBSTAR\}\}/g, '.*');
+      .replace(/\*/g, '{{STAR}}')
+      .replace(/[\\^$.|+?()[\]{}]/g, '\\$&')
+      .replace(/\{\{GLOBSTAR\}\}/g, '.*')
+      .replace(/\{\{STAR\}\}/g, '[^/]*');
     return new RegExp(`^${regexStr}$`);
   });
 
